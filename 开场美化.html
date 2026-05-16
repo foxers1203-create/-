@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>乖，到高中好好学习然后忘了我吧</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&display=swap');
+
+      :root {
+        /* 背景与卡片色 */
+        --bg: #fffafb; /* 淡粉白色背景 */
+        --card: rgba(255, 253, 254, 0.97);
+        --block: rgba(255, 255, 255, 0.85);
+        /* 边框色 */
+        --border: rgba(180, 140, 150, 0.15);
+        --border-s: rgba(180, 140, 150, 0.25);
+        /* 文本色 */
+        --text: #2a1f24;
+        --sub: #7a5560;
+        --dim: #b08e98;
+        /* 主题点缀色：暗玫瑰粉 */
+        --ink: #c27a85;
+        --ink-s: rgba(194, 122, 133, 0.1);
+        --shadow: 0 6px 28px rgba(120, 60, 80, 0.08);
+      }
+
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+        background: transparent;
+        color: var(--text);
+        font-size: 14px;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .page-wrap {
+        background: var(--bg);
+        border: 1px solid var(--border-s);
+        border-radius: 14px;
+        box-shadow: var(--shadow);
+        margin: 10px auto;
+        max-width: 800px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* 顶部纹饰条 */
+      .top-bar {
+        height: 6px;
+        background: linear-gradient(90deg, #a85c68 0%, #c27a85 40%, #e8b4bc 70%, #c27a85 100%);
+      }
+
+      /* 纸纹背景 */
+      .page-wrap::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .content {
+        position: relative;
+        z-index: 1;
+        padding: 28px 20px 20px;
+      }
+
+      /* ── 标题区 ── */
+      .hero {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 16px 0 28px;
+        gap: 10px;
+      }
+
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        color: var(--ink);
+        background: var(--ink-s);
+        border: 1px solid rgba(194, 122, 133, 0.22);
+        padding: 4px 14px;
+        border-radius: 999px;
+      }
+
+      .hero-badge::before {
+        content: '';
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--ink);
+        animation: pulse 2.5s ease-in-out infinite;
+      }
+
+      .hero-title {
+        font-family: 'Noto Serif SC', serif;
+        font-size: 26px;
+        font-weight: 900;
+        color: var(--text);
+        letter-spacing: 0.08em;
+        text-align: center;
+        line-height: 1.4;
+      }
+
+      .hero-sub {
+        font-size: 13px;
+        color: var(--dim);
+        letter-spacing: 0.1em;
+      }
+
+      .hero-divider {
+        width: 48px;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--ink), transparent);
+        border-radius: 1px;
+        margin-top: 5px;
+      }
+
+      /* ── 通用卡片 ── */
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border-s);
+        border-radius: 10px;
+        margin-bottom: 20px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(120, 60, 80, 0.04);
+      }
+
+      .card-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 16px;
+        background: var(--block);
+        border-bottom: 1px solid var(--border);
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--text);
+        letter-spacing: 0.08em;
+      }
+
+      .card-header .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .dot-main {
+        background: var(--ink);
+      }
+
+      /* ── 立绘展示（三角色并排） ── */
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        padding: 16px;
+      }
+
+      .portrait-wrap {
+        border: 1px solid var(--border-s);
+        border-radius: 8px;
+        overflow: hidden;
+        background: linear-gradient(180deg, #fff 0%, #fcf7f8 100%);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .portrait-wrap:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(194, 122, 133, 0.15);
+      }
+
+      .portrait-viewport {
+        position: relative;
+        overflow: hidden;
+        aspect-ratio: 3 / 4;
+        width: 100%;
+        background: #f0e8ea;
+      }
+
+      .portrait-img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease, filter 0.4s ease;
+      }
+
+      .portrait-wrap:hover .portrait-img {
+        transform: scale(1.05);
+        filter: saturate(1.05);
+      }
+
+      .portrait-caption {
+        padding: 12px;
+        font-size: 12px;
+        color: var(--sub);
+        line-height: 1.6;
+        text-align: center;
+        background: var(--block);
+        border-top: 1px solid var(--border);
+      }
+
+      .portrait-name {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 4px;
+        font-family: 'Noto Serif SC', serif;
+      }
+
+      /* ── 信息行 ── */
+      .info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--border);
+        transition: background 0.2s;
+      }
+      .info-row:last-child {
+        border-bottom: none;
+      }
+      .info-row:hover {
+        background: rgba(194, 122, 133, 0.04);
+      }
+
+      .info-key {
+        font-size: 13px;
+        color: var(--dim);
+        font-weight: 700;
+        white-space: nowrap;
+        flex-shrink: 0;
+        padding-top: 2px;
+      }
+      .info-val {
+        font-size: 13px;
+        color: var(--text);
+        font-weight: 500;
+        text-align: right;
+        line-height: 1.6;
+      }
+
+      /* ── 底部滑动提示 ── */
+      .footer {
+        text-align: center;
+        padding: 24px 0 18px;
+        position: relative;
+      }
+      .footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 20%;
+        right: 20%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--border-s), transparent);
+      }
+      .footer-text {
+        font-family: 'Noto Serif SC', serif;
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--dim);
+        letter-spacing: 0.2em;
+        animation: pulseText 2s infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.4; }
+      }
+      @keyframes pulseText {
+        0%, 100% { opacity: 0.6; }
+        50% { opacity: 1; }
+      }
+
+      @media (max-width: 600px) {
+        .gallery {
+          grid-template-columns: 1fr;
+        }
+        .info-row {
+          flex-direction: column;
+          gap: 6px;
+          text-align: left;
+        }
+        .info-val {
+          text-align: left;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-wrap">
+      <div class="top-bar"></div>
+      <div class="content">
+        <!-- 标题区 -->
+        <div class="hero">
+          <div class="hero-badge">阳安五中</div>
+          <div class="hero-title">乖，到高中好好学习<br>然后忘了我吧</div>
+          <div class="hero-sub">作者：苏七沫</div>
+          <div class="hero-divider"></div>
+        </div>
+
+        <!-- 角色立绘 -->
+        <div class="card">
+          <div class="card-header"><span class="dot dot-main"></span>主要羁绊</div>
+          <div class="gallery">
+
+            <!-- 刘芸 -->
+            <div class="portrait-wrap">
+              <div class="portrait-viewport">
+                <img class="portrait-img" src="https://raw.githubusercontent.com/foxers1203-create/-/refs/heads/main/%E5%88%98%E8%8A%B82.png" alt="刘芸" />
+              </div>
+              <div class="portrait-caption">
+                <div class="portrait-name">刘芸</div>
+                36岁 · 男生宿舍一楼宿管
+              </div>
+            </div>
+
+            <!-- 张文露 -->
+            <div class="portrait-wrap">
+              <div class="portrait-viewport">
+                <img class="portrait-img" src="https://raw.githubusercontent.com/foxers1203-create/-/refs/heads/main/%E5%BC%A0%E6%96%87%E9%9C%B21.png" alt="张文露" />
+              </div>
+              <div class="portrait-caption">
+                <div class="portrait-name">张文露</div>
+                26岁 · 初三英语教师
+              </div>
+            </div>
+
+            <!-- 王艺佳 -->
+            <div class="portrait-wrap">
+              <div class="portrait-viewport">
+                <img class="portrait-img" src="https://raw.githubusercontent.com/foxers1203-create/-/refs/heads/main/%E7%8E%8B%E8%89%BA%E4%BD%B31.png" alt="王艺佳" />
+              </div>
+              <div class="portrait-caption">
+                <div class="portrait-name">王艺佳</div>
+                15岁 · 16班走读生
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 角色简介 -->
+        <div class="card">
+          <div class="card-header"><span class="dot dot-main"></span>角色注解</div>
+          <div>
+            <div class="info-row">
+              <span class="info-key">刘芸 · 清醒的沉沦</span>
+              <span class="info-val">母性与情欲的共生体。清醒地看着倒计时，选择用尽气力去爱一个注定离开的少年。</span>
+            </div>
+            <div class="info-row">
+              <span class="info-key">张文露 · 等待者</span>
+              <span class="info-val">自信的塑造者。用专业能力吸引，在合法的界限内隐秘地亲密，安静等待他长大。</span>
+            </div>
+            <div class="info-row">
+              <span class="info-key">王艺佳 · 安静的主动者</span>
+              <span class="info-val">把所有的勇敢都给了一个人。在纪律的夹缝里偷着甜，接受结局但用力抓住现在。</span>
+            </div>
+            <div class="info-row">
+              <span class="info-key">故事背景</span>
+              <span class="info-val">2014年 · 河南省阳安市第五中学 / 面临中考的初三学年</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 底部提示 -->
+        <div class="footer">
+          <div class="footer-text">>> 右滑开始故事 >></div>
+        </div>
+
+      </div>
+    </div>
+  </body>
+</html>
